@@ -9,9 +9,9 @@ FDATE=$(shell git log -1 --format='%h %ci' $(FORKED) | awk '{print $$2;}')
 SOURCE_COMMIT=$(shell git describe --always)
 
 BVER=$(shell echo $(PVER) | sed -e 's/\./,/' -e 's/$$/,'"$(MDIF),$(RDIF)"'/')
-VER=$(PVER).$(MDIF) $(FDATE) +RdB-$(RDIF) $(CDATE)
-SVER=$(PVER).$(MDIF)+RdB-$(RDIF)
 J99=-j99
+VER=$(PVER).$(MDIF) $(FDATE) +RdB+JG-$(RDIF) $(CDATE)
+SVER=$(PVER).$(MDIF)+RdB+JG-$(RDIF)
 CNF=$(J99)
 
 WINTGT=/tmp/putty
