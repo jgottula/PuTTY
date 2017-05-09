@@ -4338,6 +4338,43 @@ static int TranslateKey(UINT message, WPARAM wParam, LPARAM lParam,
 	    term->app_keypad_keys ^= 1;
 	    return 0;
 	}
+	if (shift_state == 3) {
+		/* ctrl+shift+O: open new session */
+		if (wParam == 'O') {
+			SendMessage(hwnd, WM_SYSCOMMAND, IDM_NEWSESS, 0);
+			return 0;
+		}
+		/* ctrl+shift+N: duplicate current session */
+		if (wParam == 'N') {
+			SendMessage(hwnd, WM_SYSCOMMAND, IDM_DUPSESS, 0);
+			return 0;
+		}
+		/* ctrl+shift+R: restart current session */
+		if (wParam == 'R' && session_closed == TRUE) {
+			SendMessage(hwnd, WM_SYSCOMMAND, IDM_RESTART, 0);
+			return 0;
+		}
+		/* ctrl+shift+S: change settings */
+		if (wParam == 'S') {
+			SendMessage(hwnd, WM_SYSCOMMAND, IDM_RECONF, 0);
+			return 0;
+		}
+		/* ctrl+shift+K: reset terminal & clear scrollback */
+		if (wParam == 'K') {
+			SendMessage(hwnd, WM_SYSCOMMAND, IDM_RESET, 0);
+			SendMessage(hwnd, WM_SYSCOMMAND, IDM_CLRSB, 0);
+			return 0;
+		}
+		/* ctrl+shift+[1-0]: open saved session */
+		if (wParam >= '0' && wParam <= '9') {
+			int num = (wParam != '0' ? wParam - '1' : 9);
+			num *= MENU_SAVED_STEP;
+			num += IDM_SAVED_MIN;
+			
+			SendMessage(hwnd, WM_SYSCOMMAND, IDM_SAVEDSESS, num);
+			return 0;
+		}
+	}
 
 	/* Nethack keypad */
 	if (nethack_keypad && !left_alt) {
