@@ -9,9 +9,9 @@ FDATE=$(shell git log -1 --format='%h %ci' $(FORKED) | awk '{print $$2;}')
 SOURCE_COMMIT=$(shell git describe --always)
 
 BVER=$(shell echo $(PVER) | sed -e 's/\./,/' -e 's/$$/,'"$(MDIF),$(RDIF)"'/')
-J99=-j99
 VER=$(PVER).$(MDIF) $(FDATE) +RdB+JG-$(RDIF) $(CDATE)
 SVER=$(PVER).$(MDIF)+RdB+JG-$(RDIF)
+J99=-j12
 CNF=$(J99)
 
 WINTGT=/tmp/putty
@@ -112,17 +112,19 @@ ifneq ($(wildcard version.h),)
 endif
 
 push:	unix-all windows-all binary-branch
-	git push git@github.com:rdebath/PuTTY.git $(PUSHARGS) \
-		origin/master:refs/heads/master \
-		+binary \
-		+putty-rdb \
-		`git tag | grep ^0.`
-	git fetch rdebath
+	@echo Makefile.rdb: target 'push' stubbed out
+#	git push git@github.com:rdebath/PuTTY.git $(PUSHARGS) \
+#		origin/master:refs/heads/master \
+#		+binary \
+#		+putty-rdb \
+#		`git tag | grep ^0.`
+#	git fetch rdebath
 
 fetch:
-	git fetch origin
-	git push git@github.com:rdebath/PuTTY.git origin/master:refs/heads/master
-	git fetch rdebath
+	@echo Makefile.rdb: target 'fetch' stubbed out
+#	git fetch origin
+#	git push git@github.com:rdebath/PuTTY.git origin/master:refs/heads/master
+#	git fetch rdebath
 
 binary-branch: unix-all windows-all
 	rdb/mkzip.sh
