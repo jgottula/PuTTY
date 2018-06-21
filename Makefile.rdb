@@ -1,5 +1,5 @@
 
-REMOTE=$(shell git show-ref --hash origin/master | head -1)
+REMOTE=$(shell git show-ref --hash github-jgottula/master | head -1)
 FORKED=$(shell git merge-base $(REMOTE) HEAD)
 PVER=$(shell git log --format=%d --decorate=short --simplify-by-decoration $(FORKED) | awk '/^..tag:/{gsub("[^0-9.]","",$$2);print $$2;exit;}')
 MDIF=$(shell git show-branch $(PVER) $(FORKED) | grep '^ + ' | wc -l )
